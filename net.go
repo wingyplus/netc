@@ -1,19 +1,6 @@
 package main
 
-/*
-
-typedef struct http_request {
-        char *method;
-        char *path;
-} http_request;
-
-typedef void (*handler_func)(http_request *);
-
-inline void call_handler(handler_func fn, http_request *req) {
-	fn(req);
-}
-
-*/
+// #include "handler.h"
 import "C"
 import (
 	"net/http"
@@ -22,11 +9,10 @@ import (
 
 //export http_handle_func
 func http_handle_func(path *C.char, handler unsafe.Pointer) {
+	h := C.handler_func(handler)
+
 	http.HandleFunc(C.GoString(path), func(w http.ResponseWriter, r *http.Request) {
-		var req C.struct_http_request
-		req.method = C.CString(r.Method)
-		req.path = C.CString(r.URL.Path)
-		C.call_handler(C.handler_func(handler), &req)
+		callHandler(h, r)
 	})
 }
 
