@@ -1,8 +1,9 @@
 #include "libnet.h"
 #include <stdio.h>
 
-void index_handler() {
+void index_handler(http_request *req) {
   printf("hello world\n");
+  printf("[%s] %s\n", req->method, req->path);
 }
 
 int main(int argc, char *argv[]) {
