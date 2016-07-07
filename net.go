@@ -2,8 +2,6 @@ package main
 
 /*
 
-#include <string.h>
-
 typedef struct http_request {
         char *method;
         char *path;
